@@ -23,3 +23,21 @@ This repo is a Claude Code plugin that distributes agent skills.
 - The `description` is the only thing the agent sees when deciding whether to
   invoke a skill, so front-load triggers and keep it specific.
 - Do not hand-maintain a skills array in `plugin.json` — rely on auto-discovery.
+
+## Commit conventions
+
+Releases are automated by release-please, which only bumps the version on
+`feat:`, `fix:`, and breaking-change commits. A skill's `SKILL.md` and its
+bundled files **are** the shipped product, so changes to them must ship — never
+commit them as `docs:` (that type never triggers a release, so installed users
+would never get the update).
+
+- `feat(<skill>):` — a new skill, or a new capability added to an existing one.
+  Bumps the minor version.
+- `fix(<skill>):` — correcting or refining how an existing skill behaves, including
+  wording changes that change what the agent does. Bumps the patch version.
+- Scope is the skill's folder name (e.g. `fix(land-branch): ...`).
+- `docs:` is reserved for repo meta-docs that are **not** distributed in the
+  plugin — `README.md`, this `CLAUDE.md`, code comments. These do not release.
+- `chore:`/`build:`/`ci:` — scripts, manifests, workflows, deps. These do not
+  release.

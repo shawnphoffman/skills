@@ -66,6 +66,20 @@ npm run list      # list all SKILL.md files
 npm run validate  # lint frontmatter (also runs in CI)
 ```
 
+## Releases
+
+Releases are automated with
+[release-please](https://github.com/googleapis/release-please-action). It reads
+[Conventional Commits](https://www.conventionalcommits.org) on `main` and keeps
+an open "release PR" that bumps the version and updates `CHANGELOG.md`. Merge
+that PR to tag the release and publish a GitHub Release; GitHub attaches the
+`Source code (zip)`/`(tar.gz)` automatically.
+
+- `feat:` commits bump the minor version, `fix:` bump the patch, and a `!` or
+  `BREAKING CHANGE:` footer bumps major.
+- The version is kept in sync in `package.json` and `.claude-plugin/plugin.json`.
+- Nothing to do by hand except merge the release PR.
+
 ## How it works
 
 - `.claude-plugin/marketplace.json` — makes the repo an installable marketplace.

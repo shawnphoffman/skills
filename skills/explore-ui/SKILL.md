@@ -1,5 +1,5 @@
 ---
-name: mockup
+name: explore-ui
 description: Visually explore UI that is either bad or undefined. Take a screenshot of weak UI or a nebulous idea and produce several genuinely distinct takes in one self-contained HTML page, then iterate with the user to a single chosen direction and hand it off cleanly. Use whenever the user wants to rethink, redesign, lay out, mock up, explore options for, or visualize a screen, page, view, component, feature, or UI, even if they never say "mockup". Triggers on "how should this look", "this UI is bad", "redesign this", "explore options for", "lay out this", "mock up X", or any rough idea or weak screenshot handed over for visual exploration.
 argument-hint: A screenshot, PRD, issue, or a rough description of the UI to explore.
 ---

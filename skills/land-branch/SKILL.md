@@ -1,11 +1,11 @@
 ---
 name: land-branch
-description: Rebase a branch on local main, reauthor every commit to the repo's configured git identity, strip Claude Code session info from messages, fix Conventional Commits formatting, then land it on main. Use when the user names a branch and asks to clean it up, rebase it, reauthor commits, remove Claude/session info from commit messages, or land/merge a Claude Code session branch into main.
+description: Clean up a branch and merge it into main: rebase on local main, reauthor every commit to the repo's local git identity, strip Claude Code session info from messages, and tidy commit messages to match the repo's existing conventions. Use when the user names a branch and asks to clean it up, rebase it, reauthor commits, remove Claude/session info from commit messages, or land/merge a branch into main.
 ---
 
 # land-branch
 
-Clean up a (usually `claude/*`) session branch and land it on `main`. The user gives a branch name; you do the rest with two approval gates.
+Clean up a branch (often a `claude/*` session branch, but any branch works) and land it on `main`. The user gives a branch name; you do the rest with two approval gates.
 
 ## Context
 
@@ -16,7 +16,7 @@ Clean up a (usually `claude/*`) session branch and land it on `main`. The user g
   Reauthor every rewritten commit to `"<name> <email>"`. If either is unset, stop and ask the user which identity to use.
 - **Signing**: preserve the user's setup. If they sign commits (`git config commit.gpgsign` is true, or they ask for it), keep signing every rewritten commit with `-S`. Never bypass signing with `--no-gpg-sign`.
 - No `Co-Authored-By` trailers unless the user wants them.
-- **Commit format**: Conventional Commits. `<type>(<scope>): <subject>`, imperative mood, no trailing period, subject ≤72 chars. Also honor any additional commit conventions the repo already documents (CONTRIBUTING, `CLAUDE.md`/`AGENTS.md`, commitlint config).
+- **Commit format**: match the repo's existing conventions, do not impose your own. Infer the style from recent history (`git log`) and any documented rules (commitlint config, CONTRIBUTING, `CLAUDE.md`/`AGENTS.md`). If the repo clearly uses Conventional Commits, follow it; if it does not, do not convert messages to it. Only fix outright defects (typos, malformed subjects, leaked session cruft), not stylistic choices the repo already makes.
 - "Rebase on **local** main" means use local `main` as-is. Do NOT pull/fetch unless the user asks.
 - In a monorepo whose root is not itself a git repo but whose subdirectories each are (each defaulting to `main`), locate the right subrepo first (see step 1).
 
@@ -45,7 +45,7 @@ If `main..<branch>` is empty, the branch is already merged/behind: stop and repo
 For each commit, propose:
 - **Author** → the configured git identity (`<name> <email>` resolved above).
 - **Cleaned message**. Strip: Claude Code session URLs (e.g. `https://claude.ai/code/...`, `claude.com/...`), `Co-Authored-By: Claude ...` trailers, `🤖 Generated with Claude Code` footers, and stray session/run IDs or branch-suffix hashes that leaked into the body.
-- **Format fixes**: enforce Conventional Commits (type/scope/imperative/≤72/no trailing period) and match the repo's documented commit style.
+- **Format fixes**: align messages with the repo's existing commit conventions (see Context). Do not impose Conventional Commits if the repo does not already use it.
 
 Present a before→after for each commit (subject + author, plus body changes). Wait for explicit approval before touching history.
 

@@ -1,0 +1,14 @@
+{
+  "name": "shawnphoffman-skills",
+  "owner": {
+    "name": "Shawn Hoffman",
+    "email": "shawn.p.hoffman@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "shawnphoffman-skills",
+      "source": "./",
+      "description": "Shawn Hoffman's agent skills."
+    }
+  ]
+}

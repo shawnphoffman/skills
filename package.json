@@ -1,0 +1,19 @@
+{
+  "name": "shawnphoffman-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shawn Hoffman's agent skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawnphoffman/skills"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "new": "node scripts/new-skill.mjs",
+    "validate": "node scripts/validate-skills.mjs",
+    "link": "bash scripts/link-skills.sh",
+    "list": "bash scripts/list-skills.sh"
+  },
+  "packageManager": "npm@10.9.4"
+}

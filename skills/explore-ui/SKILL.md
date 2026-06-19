@@ -28,7 +28,7 @@ Exploration is optional and scaled to whether relevant code even exists. For a p
 
 The budget is defined by answers, not file counts. Stop as soon as you can answer the three questions, or when you hit the ceiling below.
 
-- Q1: Are there existing patterns or components nearby worth respecting so a take feels native and is realistic to ship, and are they actually good or part of what needs fixing?
+- Q1: Are there existing patterns or components nearby worth respecting so a take feels native and realistic to ship? (Whether to borrow or diverge is decided in step 3.)
 - Q2: What does the nearest analogous screen, view, or component look like?
 - Q3: What is the rendering paradigm, so the handoff names the right target?
 
@@ -43,25 +43,16 @@ Frontend (Next.js / React) recipe:
 - Storybook stories if present (treat as the component gallery).
 - The route, page, or component nearest the feature (`app/` or `pages/`).
 
-Rails recipe:
-- `Gemfile` for ViewComponent, Phlex, `tailwindcss-rails`, or a CSS framework.
-- `app/components` (ViewComponent/Phlex), shared partials in `app/views/shared` and `app/views/layouts`.
-- `app/assets/stylesheets` for a variables/tokens partial or design system SCSS.
-- Lookbook or Storybook if present.
-- The controller and views for the nearest feature.
+Rails recipe: `Gemfile` (ViewComponent, Phlex, `tailwindcss-rails`, CSS framework), `app/components` and `app/views/shared|layouts` for patterns, `app/assets/stylesheets` for tokens, Lookbook/Storybook if present, and the nearest feature's controller and views.
 
-Ceiling and scaling:
-- Soft ceiling: roughly 10 to 15 targeted reads. If Q1 to Q3 are answered sooner, stop sooner.
-- Small repo: exploration is near-complete.
-- Large monolith: sample the token source plus the target feature's neighborhood, and explicitly note in the handoff that you sampled rather than surveyed.
-- If no design system is detectable after a bounded search, declare "no detectable design system" and design from layout best practices instead of continuing to dig.
+Ceiling: roughly 10 to 15 targeted reads, fewer if Q1 to Q3 clear sooner. In a large monolith, sample the token source plus the feature's neighborhood and note in the handoff that you sampled rather than surveyed. If no design system surfaces after a bounded search, declare "no detectable design system" and design from layout best practices instead of digging further.
 
 ## 3. Decide how much to borrow
 
-This is visual exploration, not design-system work. Treat existing patterns as an input, never a mandate.
+Treat existing patterns as an input, never a mandate.
 
-- Patterns exist and are worth keeping: borrow from them (component shapes, spacing rhythm, color) so a take feels native and is realistic to ship. Reference real components by name where you can.
-- The existing UI is the problem: do not perpetuate it. Diverge deliberately, and in the take's description say what it departs from and why.
+- Patterns worth keeping: borrow from them (component shapes, spacing rhythm, color) so a take feels native and shippable. Reference real components by name where you can.
+- The existing UI is the problem: do not perpetuate it. Diverge deliberately, and say in the take's description what it departs from and why.
 - No relevant context: design from clean layout, hierarchy, and UX principles. Restrained defaults over invented flourish.
 
 ## 4. Produce the takes

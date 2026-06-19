@@ -27,7 +27,7 @@ echo "## global"
 
 For every file found, read it, then resolve any `@path` imports it contains. Imports are relative to the file that declares them (`~` expands to home). Follow them recursively, but cap at a sensible depth and do not revisit a file you have already read. The imported contents are part of the context too, so they are in scope for the audit.
 
-Then enumerate the skills and slash commands. Their frontmatter and names are injected every session so Claude knows what is available, so they spend context budget and can mis-fire just like memory lines.
+Then enumerate the skills and slash commands. Their names and descriptions are injected every session, so they spend context budget and can mis-fire just like memory lines.
 
 ```bash
 echo "## skills"
@@ -65,23 +65,23 @@ Keep the tone rigorous but friendly. You are helping the user reclaim context bu
 Drive questions until each surviving line passes all of these. Score nothing.
 
 1. **True.** Does it still reflect reality? Standing facts about employers, stacks, tools, paths, and people go stale silently. Flag anything that may no longer hold.
-2. **Needed.** Is it doing work, or is it restating a default Claude already follows? Generic advice ("write clean code", "be helpful") is pure cost. Flag it.
-3. **Non-redundant.** Is the same instruction stated in more than one file? Keep one canonical home and cut the rest. Flag duplication across the chain and global.
+2. **Needed.** Is it doing work, or restating a default Claude already follows? Generic advice ("write clean code", "be helpful") is pure cost.
+3. **Non-redundant.** Is the same instruction stated in more than one file? Keep one canonical home and cut the rest.
 4. **Non-contradictory.** Does it conflict with another instruction anywhere in scope? Conflicts are the most damaging flag, since the model cannot satisfy both. Surface every pair you find.
 5. **Correctly scoped.** Is a project-specific rule sitting in global (bloating every unrelated session), or a truly global preference copy-pasted into many projects (drift risk)? Project rules belong in the project file; durable personal preferences belong in global.
-6. **Load-bearing and actionable.** Vague instructions that do not change concrete behavior ("keep things tidy") cost attention without steering it. Flag for sharpening or cutting.
+6. **Load-bearing and actionable.** Vague instructions that do not change concrete behavior ("keep things tidy") cost attention without steering it.
 7. **Current to your workflow.** A pointer to a tool, path, or process you have since abandoned is worse than nothing. Flag anything that smells vestigial.
 
 ## The skills and commands rubric
 
 A skill or command spends its budget through the description and name that sit in context every session, and a bad description costs more than its words: it makes the skill fire when it should not, or never fire when it should. Drive questions until each surviving skill or command passes these.
 
-1. **Used.** Does it still match work the user actually does? An audit skill for a project that shipped, or a command wired to an abandoned workflow, is dead weight. Flag it for cutting or archiving.
-2. **Discriminating description.** Does the description name concrete trigger phrases and a clear scope, or is it vague enough to mis-fire ("helps with code") or so narrow it never matches? Flag for sharpening.
+1. **Used.** Does it still match work the user actually does? An audit skill for a shipped project, or a command wired to an abandoned workflow, is dead weight to cut or archive.
+2. **Discriminating description.** Does the description name concrete trigger phrases and a clear scope, or is it vague enough to mis-fire ("helps with code") or so narrow it never matches?
 3. **Non-overlapping.** Would two skills plausibly both trigger on the same request? Overlap causes the wrong one to win. Recommend merging, or sharpening the descriptions so their boundaries are clean.
-4. **Body matches description.** Has the skill body drifted from what the frontmatter advertises? A description that oversells or misstates the body causes bad selection. Flag the mismatch.
+4. **Body matches description.** Has the skill body drifted from what the frontmatter advertises? A description that oversells or misstates the body causes bad selection.
 5. **Correctly tiered.** Is a project-specific skill or command sitting in global, where it loads (and can fire) in every unrelated session? Is a broadly useful one trapped in one project? Recommend moving it to the right tier.
-6. **Sound internals.** Does the body reference tools, paths, or skills that no longer exist? Flag for fixing or cutting.
+6. **Sound internals.** Does the body reference tools, paths, or skills that no longer exist?
 
 ## Tiers
 

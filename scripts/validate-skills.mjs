@@ -43,6 +43,12 @@ function parseFrontmatter(content) {
   return data;
 }
 
+// Everything after the closing "---" of the frontmatter block.
+function frontmatterBody(content) {
+  const m = content.match(/^---\n[\s\S]*?\n---\n?([\s\S]*)$/);
+  return m ? m[1] : "";
+}
+
 const files = await findSkillFiles(skillsRoot);
 const errors = [];
 const seen = new Map();
@@ -54,11 +60,15 @@ if (files.length === 0) {
 for (const file of files) {
   const rel = file.slice(repoRoot.length + 1);
   const folder = basename(dirname(file));
-  const fm = parseFrontmatter(await readFile(file, "utf8"));
+  const content = await readFile(file, "utf8");
+  const fm = parseFrontmatter(content);
 
   if (!fm) {
     errors.push(`${rel}: missing or malformed YAML frontmatter (--- ... ---).`);
     continue;
+  }
+  if (!frontmatterBody(content).trim()) {
+    errors.push(`${rel}: no skill instructions after the frontmatter (body is empty).`);
   }
   if (!fm.name) errors.push(`${rel}: frontmatter is missing "name".`);
   if (!fm.description) errors.push(`${rel}: frontmatter is missing "description".`);
@@ -79,6 +89,24 @@ for (const file of files) {
   if (fm.description && fm.description.length > 1024) {
     errors.push(`${rel}: description is ${fm.description.length} chars (keep it under 1024).`);
   }
+}
+
+// Keep package.json and plugin.json versions in lockstep (release-please bumps
+// both; a hand-edit to one without the other would silently diverge).
+async function readJson(rel) {
+  try {
+    return JSON.parse(await readFile(join(repoRoot, rel), "utf8"));
+  } catch (e) {
+    errors.push(`${rel}: could not read or parse (${e.message}).`);
+    return null;
+  }
+}
+const pkg = await readJson("package.json");
+const plugin = await readJson(".claude-plugin/plugin.json");
+if (pkg && plugin && pkg.version !== plugin.version) {
+  errors.push(
+    `version mismatch: package.json is "${pkg.version}" but .claude-plugin/plugin.json is "${plugin.version}".`,
+  );
 }
 
 if (errors.length) {

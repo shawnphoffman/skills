@@ -41,7 +41,7 @@ git log --reverse --format='%H%n%an <%ae>%n%B%n==END==' main..<branch>
 ```
 If `main..<branch>` is empty, the branch is already merged/behind: stop and report.
 
-### 4. Build the plan (GATE 1 - wait for approval)
+### 4. Build the plan (GATE 1: wait for approval)
 For each commit, propose:
 - **Author** → the configured git identity (`<name> <email>` resolved above).
 - **Cleaned message**. Strip: Claude Code session URLs (e.g. `https://claude.ai/code/...`, `claude.com/...`), `Co-Authored-By: Claude ...` trailers, `🤖 Generated with Claude Code` footers, and stray session/run IDs or branch-suffix hashes that leaked into the body.
@@ -73,7 +73,7 @@ git checkout main && git merge --ff-only <branch>
 ```
 If `--ff-only` fails, local `main` moved; stop and ask before any non-ff merge.
 
-### 7. Remote cleanup (GATE 2 - prompt)
+### 7. Remote cleanup (GATE 2: prompt)
 Ask: "Push local main to origin main?"
 - If yes: `git push origin main`.
 - Then delete the now-unneeded session branch (it lived as a Claude Code remote branch):

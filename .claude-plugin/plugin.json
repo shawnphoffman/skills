@@ -3,7 +3,10 @@
   "description": "Shawn Hoffman's agent skills.",
   "version": "0.3.0",
   "author": {
-    "name": "Shawn Hoffman",
-    "email": "shawn.p.hoffman@gmail.com"
-  }
+    "name": "Shawn Hoffman"
+  },
+  "homepage": "https://github.com/shawnphoffman/skills",
+  "repository": "https://github.com/shawnphoffman/skills",
+  "license": "MIT",
+  "keywords": ["skills", "claude-code", "agent-skills"]
 }

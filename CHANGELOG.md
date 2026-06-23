@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/shawnphoffman/skills/compare/v0.2.0...v0.3.0) (2026-06-23)
+
+
+### Features
+
+* **land-branch:** use colon instead of dash in GATE labels ([88b3356](https://github.com/shawnphoffman/skills/commit/88b33564179e5b2349e8220e30017470758f12d6))
+
 ## [0.2.0](https://github.com/shawnphoffman/skills/compare/v0.1.0...v0.2.0) (2026-06-19)
 
 
